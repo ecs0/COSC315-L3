@@ -1,30 +1,51 @@
+/*
+ * answer = ((a - 2) * 2 + (b + 1) * 3) * 2.7  + ((a + c) + d * 2) ^ e
+ */
+
 #include <stdio.h>
-#include <stdlib.h>    // For atoi
-#include <unistd.h>    // For fork(), pipe(), read(), write()
+#include <stdlib.h>
+#include <unistd.h>
+#include <math.h>
 
 int main(int argc, char * args[]) {
 
-    double a, b, c, d, answer, t1, t2;
-    int p[2];
-    int bufsize;
+    double a, b, c, d, e, answer, t1, t2, t3, t4, t5;
+    int p[2], q[2], r[2], s[2], t[2];
 
-    a = atoi(args[1]);            /* extract numbers from command line args */
-    b = atoi(args[2]);
-    c = atoi(args[3]);
-    d = atoi(args[4]);
-    pipe(p);                      /* set up pipe */
-    bufsize = sizeof(int);        /* get size of data to be piped */
+    a = atof(args[1]);            /* extract numbers from command line args */
+    b = atof(args[2]);
+    c = atof(args[3]);
+    d = atof(args[4]);
+    e = atof(args[5]);
+    pipe(p);
+    pipe(q);
+    pipe(r);
+    pipe(s);
+    pipe(t);
 
-    if (!fork()) {                /* child's code */
-        t1 = c * d;                     /* calculate part of answer */
-        write(p[1], &t1, bufsize);      /* pipe result to parent */
+    if (!fork()) {
+        t1 = a - 2;
+        t1 = t1 * 2;
+        write(p[1], &t1, sizeof(double));
         return 0;
     }
-    /* parent's code */
-    t2 = a - b;                       /* calculate part of answer */
-    read(p[0], &t1, bufsize);         /* get result from pipe */
-    answer = t2 + t1;                 /* calculate answer */
+    if (!fork()) {
+        t2 = b + 1;
+        t2 = t2 * 3;
+        write(q[1], &t2, sizeof(double));      /* pipe result to parent */
+        return 0;
+    }
 
-    printf("%f - %f + %f * %f = %f\n", a, b, c, d, answer);
+    t3 = a + c;
+    t3 = t3 * 2.7;
+
+
+//    t4 =
+//    t4 = t4 * 2.7;
+    t5 = pow((t3 + d * 2), e);
+
+    answer = t4 + t5;
+
+    printf("((%f - 2) * 2 + (%f + 1) * 3) * 2.7 + ((%f + %f) + %f * 2) ^ %f = %f\n", a, b, a, c, d, e, answer);
     return 0;
 }
