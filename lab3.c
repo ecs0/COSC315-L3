@@ -50,11 +50,12 @@ int main(int argc, char * args[]) {
 
     t5 = a + c;
 
-    read(p[0], &t1, sizeof(double));
     read(r[0], &t3, sizeof(double));
 
     t5 = t5 + t3;
     t5 = pow(t5, e);
+
+    read(p[0], &t1, sizeof(double));
 
     t4 = t1 + t5;
     answer = t4;
