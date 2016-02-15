@@ -22,7 +22,6 @@ int main(int argc, char * args[]) {
     pipe(q);
     pipe(r);
 
-
     if (!fork()) {
         t1 = a - 2;
         t1 = t1 * 2;
@@ -41,8 +40,6 @@ int main(int argc, char * args[]) {
     }
 
     if(!fork()) {
-//        t3 = a + c;
-//        t3 = t3 + d * 2;
         t3 = d * 2;
         write(r[1], &t3, sizeof(double));
         return 0;
